@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 class MainActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var viewAdapter: RecyclerView.Adapter<*> // generic
     private lateinit var viewManager: RecyclerView.LayoutManager
 
     // test commit
@@ -16,19 +16,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val myDataset = arrayOf("Skittles", "Starburst", "Sour Patch Kids")
+        val myDataset = mutableListOf("Skittles", "Starburst", "Sour Patch Kids")
 
         viewManager = LinearLayoutManager(this)
         viewAdapter = MyAdapter(myDataset)
 
-        recyclerView = findViewById<RecyclerView>(R.id.my_recycler_view).apply {
+        // view or data binding
+        // apply is scoping function (kotlin)
+        recyclerView = findViewById<RecyclerView>(R.id.recyclerView).apply {
             // improve performance
-            setHasFixedSize(true)
+            //setHasFixedSize(true)
 
             // use a linear layout manager
             layoutManager = viewManager
 
-            // specify an viewAdapter (see also next example)
+            // specify an viewAdapter
             adapter = viewAdapter
 
         }
