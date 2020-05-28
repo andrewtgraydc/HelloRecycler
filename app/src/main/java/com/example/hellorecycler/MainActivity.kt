@@ -16,6 +16,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val myDataset = arrayOf("Skittles", "Starburst", "Sour Patch Kids")
+
         viewManager = LinearLayoutManager(this)
         viewAdapter = MyAdapter(myDataset)
 
