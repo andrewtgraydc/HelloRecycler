@@ -1,9 +1,9 @@
 package com.example.hellorecycler
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -17,21 +17,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewAdapter: RecyclerView.Adapter<*> // generic
     private lateinit var viewManager: RecyclerView.LayoutManager
 
-    // test commit
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //val myDataset = mutableListOf("Skittles", "Starburst", "Sour Patch Kids")
-
-        // replace with:
-        var myCandyData = ArrayList<CandyData>()
+        // create dataset. TODO: all in separate function
+        val myCandyData = ArrayList<CandyData>()
         myCandyData.add(CandyData(1, "Skittles"))
         myCandyData.add(CandyData(2, "Starburst"))
         myCandyData.add(CandyData(3, "Sour Patch Kids"))
 
         viewManager = LinearLayoutManager(this)
-        viewAdapter = MyAdapter(myCandyData, { candyItem : CandyData -> candyClicked(candyItem) })
+        viewAdapter = MyAdapter(myCandyData, candyFun)
 
         // apply is scoping function (kotlin)
         recyclerView = findViewById<RecyclerView>(R.id.recyclerView).apply {
@@ -42,15 +39,15 @@ class MainActivity : AppCompatActivity() {
             adapter = viewAdapter
         }
     }
-    
-    private fun candyClicked(candy: CandyData): Unit {
+
+    /// handle onClick by showing detail activity
+    private val candyFun = { candyItem: CandyData -> // separates parameters and body
         Log.i("candy1", "candy clicked")
 
         // launch second, detail activity, passing candy string
         val showDetailIntent = Intent(this, CandyDetailActivity::class.java).apply {
-            putExtra(CANDY_NAME, candy.candyName)
+            putExtra(CANDY_NAME, candyItem.candyName)
         }
         startActivity(showDetailIntent)
-
     }
 }
